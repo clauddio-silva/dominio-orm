@@ -2,6 +2,8 @@ package com.devsuperior.desafio.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -11,6 +13,7 @@ public class Atividade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String nome;
     private String descricao;
     private Double preco;
@@ -18,6 +21,9 @@ public class Atividade {
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
+
+    @OneToMany(mappedBy = "atividade", cascade = CascadeType.ALL)
+    private List<Bloco> blocos = new ArrayList<>();
 
     public Atividade() {}
 
@@ -58,6 +64,14 @@ public class Atividade {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public List<Bloco> getBlocos() {
+        return blocos;
     }
 
     @Override
